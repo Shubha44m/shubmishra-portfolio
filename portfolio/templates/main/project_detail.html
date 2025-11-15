@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.title }} - Shubham Mishra</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="{% url 'home' %}">Shubham</a>
+            </div>
+            <div class="nav-menu">
+                <a href="{% url 'home' %}#home" class="nav-link">Home</a>
+                <a href="{% url 'home' %}#projects" class="nav-link">Projects</a>
+                <a href="{% url 'home' %}#skills" class="nav-link">Skills</a>
+                <a href="{% url 'home' %}#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="project-detail-page">
+        <div class="container">
+            <article class="project-detail">
+                <header class="project-header">
+                    <div class="project-meta">
+                        <a href="{% url 'projects_list' %}" class="back-link">
+                            <i class="fas fa-arrow-left"></i> Back to Projects
+                        </a>
+                        <div class="project-links">
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" class="btn btn-outline" target="_blank">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                            {% endif %}
+                            {% if project.live_url %}
+                            <a href="{{ project.live_url }}" class="btn btn-primary" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <h1>{{ project.title }}</h1>
+                    
+                    <div class="project-image-large">
+                        <div class="project-placeholder-large">
+                            {% if "vr" in project.title|lower %}
+                                <i class="fas fa-tshirt"></i>
+                            {% elif "tasty" in project.title|lower %}
+                                <i class="fas fa-utensils"></i>
+                            {% else %}
+                                <i class="fas fa-code"></i>
+                            {% endif %}
+                            <span>{{ project.title }}</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="project-content">
+                    <section class="project-description">
+                        <h2>Project Overview</h2>
+                        <p>{{ project.description }}</p>
+                    </section>
+
+                    <section class="project-technologies">
+                        <h2>Technologies Used</h2>
+                        <div class="tech-tags">
+                            {% for tech in project.technologies.split %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </section>
+
+                    {% if "vr" in project.title|lower %}
+                    <section class="project-features">
+                        <h2>Key Features</h2>
+                        <ul class="features-list">
+                            <li>Real-time outfit overlay on user clothing</li>
+                            <li>MediaPipe Pose for skeletal landmarks detection</li>
+                            <li>OpenCV for image masking and transformation</li>
+                            <li>NumPy for scaling and alignment operations</li>
+                            <li>Real-time video processing capabilities</li>
+                        </ul>
+                    </section>
+                    {% elif "tasty" in project.title|lower %}
+                    <section class="project-features">
+                        <h2>Key Features</h2>
+                        <ul class="features-list">
+                            <li>Table reservation system</li>
+                            <li>Food ordering workflow</li>
+                            <li>User authentication (login/signup)</li>
+                            <li>Admin menu management</li>
+                            <li>Responsive design for all devices</li>
+                        </ul>
+                    </section>
+                    {% endif %}
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Shubham Mishra. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://github.com/ShubhamMishra" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/shubham-mishra" target="_blank">LinkedIn</a>
+                <a href="mailto:mishrashubham3322@gmail.com">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

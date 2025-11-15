@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shubham Mishra - Portfolio</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">Shubham</a>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Hi, I'm <span class="highlight">Shubham Mishra</span></h1>
+            <p class="hero-subtitle">AI & Full-Stack Developer specializing in Computer Vision and Web Development</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/ShubhamMishra" class="social-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/shubham-mishra" class="social-link" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="mailto:mishrashubham3322@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-description">
+                        Motivated and enthusiastic developer with experience in Python, Web development 
+                        and real-time AI/Computer Vision prototyping using OpenCV and MediaPipe.
+                    </p>
+                    
+                    <div class="about-details">
+                        <div class="detail-item">
+                            <strong>Email:</strong> mishrashubham3322@gmail.com
+                        </div>
+                        <div class="detail-item">
+                            <strong>Phone:</strong> +91 73900 56662
+                        </div>
+                        <div class="detail-item">
+                            <strong>Location:</strong> Uttar Pradesh, India
+                        </div>
+                        <div class="detail-item">
+                            <strong>Education:</strong> B.Tech Computer Science - Shri Ramswaroop Memorial University (2022-2026)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                {% for project in projects %}
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            {% if "vr" in project.title|lower %}
+                                <i class="fas fa-tshirt"></i>
+                            {% elif "tasty" in project.title|lower %}
+                                <i class="fas fa-utensils"></i>
+                            {% else %}
+                                <i class="fas fa-code"></i>
+                            {% endif %}
+                            <span>{{ project.title }}</span>
+                        </div>
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="{% url 'project_detail' project.id %}" class="project-link">View Details</a>
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" class="project-link" target="_blank">GitHub</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        <p class="project-description">{{ project.description }}</p>
+                        <div class="project-tech">
+                            {% for tech in project.technologies.split %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="section-footer">
+                <a href="{% url 'projects_list' %}" class="btn btn-outline">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <div class="skills-container">
+                {% for category in skill_categories %}
+                <div class="skill-category">
+                    <h3 class="skill-category-title">{{ category.name }}</h3>
+                    <div class="skills-list">
+                        {% for skill in category.skill_set.all %}
+                        <span class="skill-item">{{ skill.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education -->
+    <section class="experience-section">
+        <div class="container">
+            <div class="experience-grid">
+                <div class="experience-column">
+                    <h2 class="section-title">Experience</h2>
+                    <div class="timeline">
+                        {% for exp in experiences %}
+                        <div class="timeline-item">
+                            <h3>{{ exp.title }}</h3>
+                            <span class="timeline-duration">{{ exp.duration }}</span>
+                            <p>{{ exp.description }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="experience-column">
+                    <h2 class="section-title">Education</h2>
+                    <div class="timeline">
+                        {% for edu in education %}
+                        <div class="timeline-item">
+                            <h3>{{ edu.institution }}</h3>
+                            <span class="timeline-duration">{{ edu.duration }}</span>
+                            <p>{{ edu.degree }}<br>{{ edu.achievements }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="certifications-section">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications-grid">
+                {% for cert in certifications %}
+                <div class="certification-card">
+                    <h3>{{ cert.name }}</h3>
+                    {% if cert.year %}
+                    <span class="cert-year">{{ cert.year }}</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Let's Work Together</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>I'm always interested in new opportunities and challenges in AI and Web Development.</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email:</strong> mishrashubham3322@gmail.com
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Phone:</strong> +91 73900 56662
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Location:</strong> Uttar Pradesh, India
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Shubham Mishra. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://github.com/ShubhamMishra" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/shubham-mishra" target="_blank">LinkedIn</a>
+                <a href="mailto:mishrashubham3322@gmail.com">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
